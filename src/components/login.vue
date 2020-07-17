@@ -60,7 +60,7 @@ $input_width:300px;
 }
 .recover{
     position:absolute;
-    bottom:0px;
+    bottom:0;
     cursor:pointer;
     color:#E6A23C;
     // display: none;
@@ -92,7 +92,6 @@ export default {
     },
     mounted() {
         document.onkeydown = (event) => {
-            var router=this.$route.path;
             var e = event || window.event || arguments.callee.caller.arguments[0];
             if (e && e.keyCode == 13&&this.$route.path=='/login') { // enter 键
                 this.login();
@@ -116,8 +115,8 @@ export default {
                         let json = data;
                         if (json.status == 200) {
                             this.$common.setSessionStorage('username',json.data.username);
-                            //存入菜单,渲染菜单
-                            //可写死
+                            // 存入菜单,渲染菜单
+                            // 可写死
                             // this.$store.dispatch("add_Menus",json.data.sysMenuVoList);
                             //
                             //  //动态设置路由

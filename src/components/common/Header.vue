@@ -60,24 +60,13 @@
                 let username = this.$common.getSessionStorage('username');
                 return username ? username : this.name;
             },
-            getlev(){
 
-                let levList = this.$common.getSessionStorage('lev',true);
-                let lev='';
-                if(levList){
-                    for(var i=0;i<levList.length;i++){
-                        lev+=levList[i].roleName;
-                    }
-                }
-
-                return lev ? lev : this.lev;
-            }
         },
         methods:{
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command == 'loginout'){
-                    this.$common.removeSessionStorage('token');
+                    this.$common.removeSessionStorage('username');
                     this.$router.push('/login');
                 }
                 else if(command == 'changeZh'){
