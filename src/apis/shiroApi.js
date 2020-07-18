@@ -24,18 +24,12 @@ export default {
     /**
      * 记录登陆日志
      */
-    loginLog: function ({ip,city,type}) {
-        var param={
-            ip:ip,
-            city:city,
-            type:type
-        };
-        return Axios.post('/api/loginlog-api/save', param);
-    },
-    /**
-     * 还原数据
-     */
-    rollBackTables: function () {
-        return Axios.post('/api/loginlog-api/rollBackTables');
-    }
+    // loginLog: function ({ip,city,type}) {
+    //     let param={
+    //         ip:ip,
+    //         city:city,
+    //         type:type
+    //     };
+    //     return Axios.post('/api/loginlog-api/save', param);
+    // },
 }

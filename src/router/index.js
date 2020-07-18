@@ -91,11 +91,11 @@ router.beforeEach((to, from, next) => {
     next();
   }
   else {
-   let token = sessionStorage.getItem('username');
+    var token = sessionStorage.getItem('username');
     //如果没登录,都导向登录页
     if (!token) {
       if (to.path !== '/login') {
-        next({ path: '/login' })
+        next({ path: '/index' })
       }
       else {
         next();

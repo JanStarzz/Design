@@ -124,14 +124,14 @@ export default {
                             //
                             // //存储按钮权限
                             // this.$store.dispatch("add_Permissions", json.data.rolePermissionVoList);
-                            // this.$router.replace({ path: "/index" });
+                            this.$router.replace({ path: "/index" });
 
-                            var loginLog={
-                                ip:returnCitySN["cip"],
-                                city:returnCitySN["cname"]+'-'+json.data.userInfo.userName+'-登陆'
-                            };
+                            // let loginLog={
+                            //     ip:returnCitySN["cip"],
+                            //     city:returnCitySN["cname"]+'-'+json.data.username+'-登陆'
+                            // };
 
-                            apis.shiroApi.loginLog(loginLog);
+                            // apis.shiroApi.loginLog(loginLog);
                             return;
                         }
                         else if (json.message) {
@@ -139,7 +139,7 @@ export default {
                         }
                     }
                     this.errorInfo.isShowError = true;
-                    this.$store.dispatch("loginLog",loginLog);
+                    // this.$store.dispatch("loginLog",loginLog);
                 })
                 .catch((err) => {
                     console.log('error:', err);
