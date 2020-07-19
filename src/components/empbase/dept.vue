@@ -2,16 +2,17 @@
     <div class="container">
         <!-- 查询区----start -->
         <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" :model="formSearch" class="demo-form-inline">
-            <el-form-item label="审批人">
-                <el-input v-model="formSearch.user" placeholder="审批人"></el-input>
+            <el-form-item label="部门编号">
+                <el-input v-model="formSearch.user" placeholder="部门编号"></el-input>
             </el-form-item>
-            <el-form-item label="活动区域">
-                <el-select v-model="formSearch.region" placeholder="活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+            <el-form-item label="部门名称">
+                <el-select v-model="formSearch.region" placeholder="部门名称">
+                  <el-option label="无" value="null"></el-option>
+                    <el-option label="部门一" value="shanghai"></el-option>
+                    <el-option label="部门二" value="beijing"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="审批人">
+           <!-- <el-form-item label="审批人">
                 <el-input v-model="formSearch.user" placeholder="审批人"></el-input>
             </el-form-item>
             <el-form-item label="审批人">
@@ -25,7 +26,7 @@
             </el-form-item>
             <el-form-item label="审批人">
                 <el-input v-model="formSearch.user" placeholder="审批人"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label=" ">
                 <el-button type="primary" @click="onSubmit">查询</el-button>
             </el-form-item>
@@ -42,11 +43,15 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
-            <el-table-column prop="date" label="日期" width="180" sortable>
+            <el-table-column prop="date" label="部门编号" width="180" sortable>
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="180" sortable>
+            <el-table-column prop="name" label="部门名称" width="180" >
             </el-table-column>
-            <el-table-column prop="address" label="地址">
+            <el-table-column prop="address" label="部门电话">
+            </el-table-column>
+            <el-table-column prop="address" label="部门描述">
+            </el-table-column>
+            <el-table-column prop="address" label="成立日期">
             </el-table-column>
             <el-table-column label="操作" fixed="right" min-width="180">
                 <template slot-scope="scope">
@@ -60,21 +65,27 @@
         <!-- 表格---end -->
 
         <!-- 编辑弹框---start -->
-        <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="700px">
+        <el-dialog title="部门信息" :visible.sync="dialogFormVisible" width="700px">
             <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" :model="formEdit" class="demo-form-inline">
-                <el-form-item label="姓名">
-                    <el-input v-model="formEdit.name" placeholder="姓名"></el-input>
-                </el-form-item>
-                <el-form-item label="地址">
+
+                <el-form-item label="部门编号">
                     <el-input v-model="formEdit.address" placeholder="地址"></el-input>
                 </el-form-item>
-                <el-form-item label="日期">
-                    <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="日期" v-model="formEdit.date" style="width: 100%;"></el-date-picker>
+                <el-form-item label="部门名称">
+                    <el-input v-model="formEdit.address" placeholder="地址"></el-input>
                 </el-form-item>
-                <el-form-item label="审批人">
-                    <el-input v-model="formEdit.other" placeholder="审批人"></el-input>
+                <el-form-item label="部门电话">
+                    <el-input v-model="formEdit.address" placeholder="地址"></el-input>
+                </el-form-item>
+                <el-form-item label="部门描述">
+                    <el-input v-model="formEdit.address" placeholder="地址"></el-input>
                 </el-form-item>
                 
+                <el-form-item label="成立日期">
+                    <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="日期" v-model="formEdit.date" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+              
+
             </el-form>
 
             <div slot="footer" class="dialog-footer">
@@ -88,16 +99,22 @@
         <!-- 新增弹框---start -->
         <el-dialog title="新增记录" :visible.sync="dialogAddVisible" width="700px">
             <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" :model="formAdd" class="demo-form-inline">
-                <el-form-item label="姓名">
-                    <el-input v-model="formAdd.name" placeholder="姓名"></el-input>
+                <el-form-item label="部门编号">
+                    <el-input v-model="formAdd.name" placeholder="部门编号"></el-input>
                 </el-form-item>
-                <el-form-item label="地址">
-                    <el-input v-model="formAdd.address" placeholder="地址"></el-input>
+                <el-form-item label="部门名称">
+                    <el-input v-model="formAdd.address" placeholder="部门名"></el-input>
                 </el-form-item>
-                <el-form-item label="日期">
+                <el-form-item label="部门电话">
+                    <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
+                </el-form-item>
+                <el-form-item label="部门描述">
+                    <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
+                </el-form-item>
+                <el-form-item label="成立日期">
                     <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="日期" v-model="formAdd.date" style="width: 100%;"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="审批人">
+               <!-- <el-form-item label="审批人">
                     <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
                 </el-form-item>
                 <el-form-item label="审批人">
@@ -105,7 +122,7 @@
                 </el-form-item>
                 <el-form-item label="审批人">
                     <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
-                </el-form-item>
+                </el-form-item> -->
             </el-form>
 
             <div slot="footer" class="dialog-footer">
