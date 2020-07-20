@@ -3,6 +3,7 @@ import adminApi from './adminApi';
 import shiroApi from './shiroApi';
 import mayiApi from './mayiApi';
 import msgApi from './msgApi';
+import salaryProjectApi from "./salaryProjectApi";
 /**
  * 接口汇总
  */
@@ -14,5 +15,8 @@ export default {
     /**蚂蚁种树接口 */
     mayiApi:mayiApi,
     /**消息接口 */
-    msgApi:msgApi
+    msgApi:msgApi,
+
+    // 工资项目接口
+    salaryProjectApi:salaryProjectApi
 }

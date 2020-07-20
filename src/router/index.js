@@ -95,7 +95,7 @@ router.beforeEach((to, from, next) => {
     //如果没登录,都导向登录页
     if (!token) {
       if (to.path !== '/login') {
-        next({ path: '/index' })
+        next({ path: '/login' })
       }
       else {
         next();

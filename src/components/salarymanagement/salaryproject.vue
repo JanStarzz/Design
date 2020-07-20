@@ -12,16 +12,16 @@
         <el-input v-model="formSearch.itemName"></el-input>
       </el-form-item>
       <el-form-item label="项目类型">
-        <el-select v-model="formSearch.itemType" placeholder="固定项目">
-          <el-option label="固定项目" value="1"></el-option>
-          <el-option label="计算项目" value="2"></el-option>
-          <el-option label="导入项目" value="3"></el-option>
-          <el-option label="实发项目" value="4"></el-option>
+        <el-select v-model="formSearch.itemType">
+          <el-option label="固定项目" value="固定项目"></el-option>
+          <el-option label="计算项目" value="计算项目"></el-option>
+          <el-option label="导入项目" value="导入项目"></el-option>
+          <el-option label="实发项目" value="实发项目"></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label=" ">
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit(formSearch)">查询</el-button>
       </el-form-item>
     </el-form>
     <!-- 查询区----end -->
@@ -43,7 +43,7 @@
     >
       <el-table-column type="selection" width="55"></el-table-column>
 
-      <el-table-column prop="itemId" label="编号" width="80" sortable></el-table-column>
+      <el-table-column prop="id" label="编号" width="80" sortable></el-table-column>
       <el-table-column prop="itemName" label="项目名称"></el-table-column>
       <el-table-column prop="itemType" label="项目类型"></el-table-column>
       <el-table-column prop="formula" label="计算公式"></el-table-column>
@@ -134,8 +134,8 @@
         </el-form-item>
         <el-form-item label="项目类型">
           <el-select v-model="caculationItem.itemName" placeholder="固定项目">
-            <el-option label="固定项目" value="1"></el-option>
-            <el-option label="导入项目" value="3"></el-option>
+            <el-option label="固定项目" value="固定项目"></el-option>
+            <el-option label="导入项目" value="导入项目"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="操作符">
@@ -179,7 +179,7 @@
           <el-input v-model="formAdd.name"></el-input>
         </el-form-item>
         <el-form-item label="项目类型">
-          <el-select v-model="formAdd.name" placeholder="固定项目">
+          <el-select v-model="formAdd.name">
             <el-option label="固定项目" value="1"></el-option>
             <el-option label="导入项目" value="3"></el-option>
           </el-select>
@@ -245,7 +245,7 @@
           <el-input v-model="formAdd.name"></el-input>
         </el-form-item>
         <el-form-item label="项目类型">
-          <el-select v-model="formAdd.name" placeholder="固定项目">
+          <el-select v-model="formAdd.name">
             <el-option label="固定项目" value="1"></el-option>
             <el-option label="导入项目" value="3"></el-option>
           </el-select>
@@ -258,7 +258,7 @@
             <el-option label="/" value="/"></el-option>
           </el-select>
         </el-form-item>
-        
+
         <el-form-item label="数值">
           <el-input v-model="formAdd.address"></el-input>
         </el-form-item>
@@ -284,34 +284,14 @@
 </style>
 
 <script>
+import apis from "../../apis/salaryProjectApi";
+
 export default {
   name: "tablepage",
   data() {
     return {
       //表格的数据
-      tableData: [
-        {
-          itemId: 1,
-          itemName: "工作保险",
-          itemType: "计算项目",
-          formula: "基本工资×2%",
-          fluctuat: "减"
-        },
-        {
-          itemId: 2,
-          itemName: "基本工资",
-          itemType: "固定项目",
-          formula: "3000",
-          fluctuat: "加"
-        },
-        {
-          itemId: 3,
-          itemName: "基本工资",
-          itemType: "导入项目",
-          formula: "20",
-          fluctuat: "加"
-        }
-      ],
+      tableData: '',
       //后端查出的部门
       dName: [{ value: "研发部" }, { value: "生产部" }],
 
@@ -322,8 +302,8 @@ export default {
       },
       formSearch: {
         //表单对象
-        user: "",
-        region: ""
+        itemName:'',
+        itemType:''
       },
       labelPosition: "right", //lable对齐方式
       labelWidth: "80px", //lable宽度
@@ -439,8 +419,15 @@ export default {
         type: "success"
       });
     },
-    onSubmit() {
-      console.log("submit!");
+    /**
+     * 查询
+     */
+    onSubmit(formSearch) {
+      console.log(formSearch)
+      apis.salaryProject(formSearch).then(data=>{
+        let item = data.data.data;
+        this.tableData = item;
+      })
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

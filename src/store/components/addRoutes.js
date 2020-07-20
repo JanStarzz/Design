@@ -33,7 +33,7 @@ const addRoutes = {
       ConvertRoutes(routeList, routeHideList,routeParam); // 将后台的路由数据components转化成组件
       var rootRoute= [{
         path: '/',
-        component: resolve => require(['@/components/Common/Home.vue'], resolve),
+        component: resolve => require(['@/components/common/Home.vue'], resolve),
         meta: { title: '自述文件' },
         children:routeList
       }];
