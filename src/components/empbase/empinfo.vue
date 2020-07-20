@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="onSubmit()">查询</el-button>
       </el-form-item>
     </el-form>
     <!-- 查询区----end -->
@@ -246,7 +246,7 @@
 
       },
       onSubmit() {
-        alert(this.formSearch.deptName);
+        alert(this.formSearch.deptName+this.formSearch.empNo+this.formSearch.empName);
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;

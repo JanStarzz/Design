@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit(formSearch)">查询</el-button>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
     </el-form>
     <!-- 查询区----end -->
@@ -27,15 +27,11 @@
       <el-table-column type="selection" width="55">
       </el-table-column>
 
-      <el-table-column prop="date" label="部门编号" width="180" sortable>
+      <el-table-column prop="deptNo" label="部门编号" width="180" sortable>
       </el-table-column>
-      <el-table-column prop="name" label="部门名称" width="180">
+      <el-table-column prop="deptName" label="部门名称" width="180">
       </el-table-column>
-      <el-table-column prop="address" label="部门电话">
-      </el-table-column>
-      <el-table-column prop="address" label="部门描述">
-      </el-table-column>
-      <el-table-column prop="address" label="成立日期">
+      <el-table-column prop="deptInfo" label="部门描述">
       </el-table-column>
       <el-table-column label="操作" fixed="right" min-width="180">
         <template slot-scope="scope">
@@ -55,24 +51,15 @@
       <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" :model="formEdit" class="demo-form-inline">
 
         <el-form-item label="部门编号">
-          <el-input v-model="formEdit.address" placeholder="地址"></el-input>
+          <el-input v-model="formEdit.dpetNo" placeholder="地址"></el-input>
         </el-form-item>
         <el-form-item label="部门名称">
-          <el-input v-model="formEdit.address" placeholder="地址"></el-input>
+          <el-input v-model="formEdit.deptName" placeholder="地址"></el-input>
         </el-form-item>
-        <el-form-item label="部门电话">
-          <el-input v-model="formEdit.address" placeholder="地址"></el-input>
-        </el-form-item>
+
         <el-form-item label="部门描述">
-          <el-input v-model="formEdit.address" placeholder="地址"></el-input>
+          <el-input v-model="formEdit.deptInfo" placeholder="地址"></el-input>
         </el-form-item>
-
-        <el-form-item label="成立日期">
-          <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="日期" v-model="formEdit.date"
-            style="width: 100%;"></el-date-picker>
-        </el-form-item>
-
-
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -84,33 +71,24 @@
     <!-- 编辑弹框---end -->
 
     <!-- 新增弹框---start -->
-    <el-dialog title="新增记录" :visible.sync="dialogAddVisible" width="700px">
+    <el-dialog title="新增部门" :visible.sync="dialogAddVisible" width="700px">
       <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" :model="formAdd" class="demo-form-inline">
         <el-form-item label="部门编号">
-          <el-input v-model="formAdd.name" placeholder="部门编号"></el-input>
+          <el-input v-model="formAdd.deptNo" placeholder="部门编号"></el-input>
         </el-form-item>
         <el-form-item label="部门名称">
-          <el-input v-model="formAdd.address" placeholder="部门名"></el-input>
-        </el-form-item>
-        <el-form-item label="部门电话">
-          <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
+          <el-select v-model="formAdd.deptName" placeholder="请选择">
+            <el-option v-for="item in allDept" :label="item.deptName" :key="item.deptNo" :value="item.deptName">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="部门描述">
-          <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
+          <el-input v-model="formAdd.info" placeholder="请输入"></el-input>
         </el-form-item>
-        <el-form-item label="成立日期">
+      <!--  <el-form-item label="成立日期">
           <el-date-picker type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="日期" v-model="formAdd.date"
             style="width: 100%;"></el-date-picker>
-        </el-form-item>
-        <!-- <el-form-item label="审批人">
-                    <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
-                </el-form-item>
-                <el-form-item label="审批人">
-                    <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
-                </el-form-item>
-                <el-form-item label="审批人">
-                    <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
-                </el-form-item> -->
+        </el-form-item> -->
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -141,28 +119,24 @@
           pageTotal: 80
         },
         tableData: [{
-            id: "1",
-            date: "2016-05-02",
-            name: "李紫婷",
-            address: "上海市普陀区金沙江路 1518 弄"
+            deptNo: "1",
+            deptName: "2016-05-02",
+            deptInfo: "李紫婷"
           },
           {
-            id: "2",
-            date: "2016-05-04",
-            name: "杨超越",
-            address: "上海市普陀区金沙江路 1517 弄"
+            deptNo: "1",
+            deptName: "2016-05-02",
+            deptInfo: "李紫婷"
           },
           {
-            id: "3",
-            date: "2016-05-01",
-            name: "赖小七",
-            address: "上海市普陀区金沙江路 1519 弄"
+            deptNo: "1",
+            deptName: "2016-05-02",
+            deptInfo: "李紫婷"
           },
           {
-            id: "4",
-            date: "2016-05-03",
-            name: "张紫宁",
-            address: "上海市普陀区金沙江路 1516 弄"
+            deptNo: "1",
+            deptName: "2016-05-02",
+            deptInfo: "李紫婷"
           }
         ],
         formSearch: { //表单对象
@@ -196,22 +170,21 @@
         formLabelWidth: '120px',
         formAdd: {
           //表单对象
-          name: "",
-          address: "",
-          date: "",
-          other: ""
+          deptNo: "",
+          deptName: "",
+          deptInfo: ""
         },
         formEdit: {
           //表单对象
-          name: "",
-          address: "",
-          date: "",
-          other: ""
+          deptNo: "",
+          deptName: "",
+          deptInfo: ""
         },
         multipleSelection: []
       };
     },
     methods: {
+      //rowData带到后端更新
       handleEdit(index, rowData) {
         var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
         this.$message({
@@ -222,13 +195,14 @@
         this.dialogFormVisible = true;
       },
       handleDelete(index, rowData) {
+        //undo将rowdata带到后端删除
         var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.tableData.splice(index, 1);
+          // this.tableData.splice(index, 1);
           this.$message({
             type: 'success',
             message: '删除成功!' + msg
@@ -256,8 +230,8 @@
         });
 
       },
-      onSubmit(val) {
-        alert(JSON.stringify(val));
+      onSubmit() {
+        alert(JSON.stringify(this.formSearch));
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
@@ -267,6 +241,7 @@
         });
       },
       deleteMany() {
+        //undo后端带走this.multipleSelection批量删除
         var ids = this.multipleSelection.map(item => item.id).join();
         this.$message({
           message: '删除的项是:' + JSON.stringify(this.multipleSelection),
@@ -274,6 +249,7 @@
         });
       },
       save() {
+        //后端存储undo，带走param
         let param = Object.assign({}, this.formAdd);
         this.tableData.push(param);
         this.dialogAddVisible = false;
