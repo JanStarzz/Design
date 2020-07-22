@@ -1,6 +1,6 @@
 /**
- * 
- * 懒加载动态路由 
+ *
+ * 懒加载动态路由
  */
 function lazy(code) {
 
@@ -22,22 +22,22 @@ function getComponetByPath(path) {
  * path跟配置里的资源标示对应,同时跟url地址对应
  */
 const dynamicRouter = [
-  {
-    name: 'index',
-    path: '/index',
-    component: resolve => require(['@/components/index.vue'], resolve),
-    meta: {
-      title: '系统首页'
-    }
-  },
-  {
-    name: 'messageboard',
-    path: '/messageboard',
-    component: resolve => require(['@/components/tablepage/messageboard.vue'], resolve),
-    meta: {
-      title: '系统首页'
-    }
-  },
+  // {
+  //   name: 'index',
+  //   path: '/index',
+  //   component: resolve => require(['@/components/index.vue'], resolve),
+  //   meta: {
+  //     title: '系统首页'
+  //   }
+  // },
+  // {
+  //   name: 'messageboard',
+  //   path: '/messageboard',
+  //   component: resolve => require(['@/components/tablepage/messageboard.vue'], resolve),
+  //   meta: {
+  //     title: '系统首页'
+  //   }
+  // },
   // {
   //   name: 'searchinput',
   //   path: '/searchinput',
@@ -80,70 +80,70 @@ const dynamicRouter = [
   //     title: '树组件页'
   //   }
   // },
-  {
-    name: 'OrganizationTree',
-    path: '/organizationTree',
-    component: resolve => require(['@/components/admin/OrganizationTree.vue'], resolve),
-    meta: { title: '机构管理' }
-  },
-  {
-    name: 'SysUser',
-    path: '/sysUser',
-    component: resolve => require(['@/components/admin/SysUser.vue'], resolve),
-    meta: { title: '用户管理' }
-  },
-  {
-    name: 'SysAcl',
-    path: '/sysAcl',
-    component: resolve => require(['@/components/admin/SysAcl.vue'], resolve),
-    meta: { title: '角色资源管理' }
-  },
-  {
-    name: 'SysMenu',
-    path: '/sysMenu',
-    component: resolve => require(['@/components/admin/SysMenu.vue'], resolve),
-    meta: { title: '菜单管理' }
-  },
-  {
-    name: 'SysResource',
-    path: '/sysResource',
-    component: resolve => require(['@/components/admin/SysResource.vue'], resolve),
-    meta: { title: '资源管理' }
-  },
-  {
-    name: 'SysRole',
-    path: '/sysRole',
-    component: resolve => require(['@/components/admin/SysRole.vue'], resolve),
-    meta: { title: '角色管理' }
-  },
-  {
-    name: 'sysRoleMap',
-    path: '/sysRoleMap',
-    component: resolve => require(['@/components/admin/SysRoleMap.vue'], resolve),
-    meta: { title: '角色权限管理' }
-  },
   // {
-  //   name: 'msg',
-  //   path: '/msg',
-  //   component: resolve => require(['@/components/message/msg.vue'], resolve),
-  //   meta: { title: '建议留言' }
+  //   name: 'OrganizationTree',
+  //   path: '/organizationTree',
+  //   component: resolve => require(['@/components/admin/OrganizationTree.vue'], resolve),
+  //   meta: { title: '机构管理' }
   // },
-  {
-    name: 'messageboard',
-    path: '/messageboard',
-    component: resolve => require(['@/components/tablepage/messageboard.vue'], resolve),
-    meta: {
-      title: '增删改查'
-    }
-  },
-  {
-    name: 'messageboard2',
-    path: '/messageboard2',
-    component: resolve => require(['@/components/tablepage/messageboard2.vue'], resolve),
-    meta: {
-      title: '增删改查二'
-    }
-  },
+  // {
+  //   name: 'SysUser',
+  //   path: '/sysUser',
+  //   component: resolve => require(['@/components/admin/SysUser.vue'], resolve),
+  //   meta: { title: '用户管理' }
+  // },
+  // {
+  //   name: 'SysAcl',
+  //   path: '/sysAcl',
+  //   component: resolve => require(['@/components/admin/SysAcl.vue'], resolve),
+  //   meta: { title: '角色资源管理' }
+  // },
+  // {
+  //   name: 'SysMenu',
+  //   path: '/sysMenu',
+  //   component: resolve => require(['@/components/admin/SysMenu.vue'], resolve),
+  //   meta: { title: '菜单管理' }
+  // },
+  // {
+  //   name: 'SysResource',
+  //   path: '/sysResource',
+  //   component: resolve => require(['@/components/admin/SysResource.vue'], resolve),
+  //   meta: { title: '资源管理' }
+  // },
+  // {
+  //   name: 'SysRole',
+  //   path: '/sysRole',
+  //   component: resolve => require(['@/components/admin/SysRole.vue'], resolve),
+  //   meta: { title: '角色管理' }
+  // },
+  // {
+  //   name: 'sysRoleMap',
+  //   path: '/sysRoleMap',
+  //   component: resolve => require(['@/components/admin/SysRoleMap.vue'], resolve),
+  //   meta: { title: '角色权限管理' }
+  // },
+  // // {
+  // //   name: 'msg',
+  // //   path: '/msg',
+  // //   component: resolve => require(['@/components/message/msg.vue'], resolve),
+  // //   meta: { title: '建议留言' }
+  // // },
+  // {
+  //   name: 'messageboard',
+  //   path: '/messageboard',
+  //   component: resolve => require(['@/components/tablepage/messageboard.vue'], resolve),
+  //   meta: {
+  //     title: '增删改查'
+  //   }
+  // },
+  // {
+  //   name: 'messageboard2',
+  //   path: '/messageboard2',
+  //   component: resolve => require(['@/components/tablepage/messageboard2.vue'], resolve),
+  //   meta: {
+  //     title: '增删改查二'
+  //   }
+  // },
   // {
   //   name: 'transition',
   //   path: '/transition',
@@ -152,12 +152,12 @@ const dynamicRouter = [
   //     title: '左导航切换效果'
   //   }
   // },
-  {
-    name: 'detail',
-    path: '/detail',
-    component: resolve => require(['@/components/tablepage/detail.vue'], resolve),
-    meta: { title: '详情页' }
-  },
+  // {
+  //   name: 'detail',
+  //   path: '/detail',
+  //   component: resolve => require(['@/components/tablepage/detail.vue'], resolve),
+  //   meta: { title: '详情页' }
+  // },
   // {
   //   name: 'ckeditor',
   //   path: '/ckeditor',

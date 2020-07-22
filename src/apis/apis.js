@@ -4,6 +4,7 @@ import shiroApi from './shiroApi';
 import mayiApi from './mayiApi';
 import msgApi from './msgApi';
 import salaryProjectApi from "./salaryProjectApi";
+import baseManage from "./baseManage";
 /**
  * 接口汇总
  */
@@ -18,5 +19,7 @@ export default {
     msgApi:msgApi,
 
     // 工资项目接口
-    salaryProjectApi:salaryProjectApi
+    salaryProjectApi:salaryProjectApi,
+    // 部門相關接口
+    baseManage:baseManage
 }

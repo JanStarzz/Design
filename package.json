@@ -19,6 +19,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.22.2",
+    "qs": "^6.9.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex-persist": "^1.8.0"

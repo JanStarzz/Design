@@ -14,7 +14,7 @@ function toRoutes(routerList,routeHideList, sysMenuList) {
                 var routeNode = {
                     name: code,
                     path: '/' + code,
-                    component: lazy(code),
+                    // component: lazy(code),
                     meta: { title: sysMenuNode.menuName },
                     children:[]
                 };

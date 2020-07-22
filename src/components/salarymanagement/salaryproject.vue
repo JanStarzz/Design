@@ -29,7 +29,7 @@
     <el-row class="mgb15">
       <el-button size="small" round type="primary" @click="newImport = true">新增导入项目</el-button>
       <el-button size="small" round type="primary" @click="newBase = true">新增固定项目</el-button>
-      <el-button size="small" round type="primary" @click="newCaculation = true">新增计算项目</el-button>
+      <el-button size="small" round type="primary" @click="newCacula">新增计算项目</el-button>
       <el-button size="small" round type="danger" @click="deleteMany">批量删除</el-button>
     </el-row>
     <!-- 操作区----end -->
@@ -46,7 +46,7 @@
       <el-table-column prop="id" label="编号" width="80" sortable></el-table-column>
       <el-table-column prop="itemName" label="项目名称"></el-table-column>
       <el-table-column prop="itemType" label="项目类型"></el-table-column>
-      <el-table-column prop="formula" label="计算公式"></el-table-column>
+      <el-table-column prop="itemFormula" label="计算公式"></el-table-column>
       <el-table-column prop="fluctuat" label="增减项"></el-table-column>
 
       <el-table-column label="操作" fixed="right" min-width="180">
@@ -54,7 +54,7 @@
           <el-button
             size="mini"
             v-if="scope.row.itemType=='计算项目'"
-            @click="handleEdit1(scope.$index, scope.row, )"
+            @click="handleEdit1(scope.$index, scope.row)"
           >编辑</el-button>
           <el-button
             size="mini"
@@ -92,30 +92,22 @@
         :model="baseItem"
         class="demo-form-inline"
       >
-        <el-form-item label="项目名称" v-model="baseItem.itemName">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item v-show="!isImport" label="部门名称" :data="dName" v-model="baseItem.deptName">
-          <el-select>
-            <el-option v-for="name in dName" :label="name.value" :value="name.value"></el-option>
-          </el-select>
+        <el-form-item label="项目名称">
+          <el-input  v-model="baseItem.itemName"></el-input>
         </el-form-item>
 
-        <el-form-item label="数值" v-model="baseItem.num">
-          <el-input></el-input>
-        </el-form-item>
-
-        <el-form-item label="增减项" v-model="baseItem.fluctuat">
-          <el-select>
-            <el-option value="+"></el-option>
-            <el-option value="-"></el-option>
+        <el-form-item label="增减项">
+          <el-select placeholder="请选择增减项"  v-model="baseItem.fluctuat">
+            <el-option label="增" value="增"></el-option>
+            <el-option label="减" value="减"></el-option>
+            <el-option label="不影响" value="不影响"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="edit">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 编辑弹框 固定项目---end -->
@@ -126,33 +118,20 @@
         :label-position="labelPosition"
         :label-width="labelWidth"
         :inline="true"
-        :model="caculationItem"
+        :model="calculationItem"
         class="demo-form-inline"
       >
-        <el-form-item label="项目名称" v-model="caculationItem.itemName">
+        <el-form-item label="项目名称" v-model="calculationItem.itemName">
           <el-input></el-input>
         </el-form-item>
-        <el-form-item label="项目类型">
-          <el-select v-model="caculationItem.itemName" placeholder="固定项目">
-            <el-option label="固定项目" value="固定项目"></el-option>
-            <el-option label="导入项目" value="导入项目"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="操作符">
-          <el-select v-model="caculationItem.operation" placeholder="+">
-            <el-option label="+" value="+"></el-option>
-            <el-option label="-" value="-"></el-option>
-            <el-option label="*" value="*"></el-option>
-            <el-option label="/" value="/"></el-option>
-          </el-select>
-        </el-form-item>
 
-        <el-form-item label="数值" v-model="caculationItem.num">
+
+        <el-form-item label="公式" v-model="calculationItem.itemFormula">
           <el-input></el-input>
         </el-form-item>
 
         <el-form-item label="增减项">
-          <el-select v-model="caculationItem.fluctuat">
+          <el-select v-model="calculationItem.fluctuat">
             <el-option label="+" value="+"></el-option>
             <el-option label="-" value="-"></el-option>
           </el-select>
@@ -175,28 +154,27 @@
         :model="formAdd"
         class="demo-form-inline"
       >
-        <el-form-item label="项目名称">
-          <el-input v-model="formAdd.name"></el-input>
-        </el-form-item>
         <el-form-item label="项目类型">
-          <el-select v-model="formAdd.name">
-            <el-option label="固定项目" value="1"></el-option>
-            <el-option label="导入项目" value="3"></el-option>
-          </el-select>
+          <el-input
+            placeholder="导入项目"
+            v-model="formAdd.itemType"
+            :disabled="true">
+          </el-input>
         </el-form-item>
-        <el-form-item label="操作符">
-          <el-select v-model="caculationItem.operation" placeholder="+">
-            <el-option label="+" value="+"></el-option>
-            <el-option label="-" value="-"></el-option>
-            <el-option label="*" value="*"></el-option>
-            <el-option label="/" value="/"></el-option>
-          </el-select>
+        <el-form-item label="项目名称">
+          <el-input v-model="formAdd.itemName"></el-input>
         </el-form-item>
-        <el-form-item label="数值">
-          <el-input v-model="formAdd.address"></el-input>
+
+        <el-form-item label="计算公式" >
+          <el-input v-model="formAdd.itemFormula" placeholder="不是计算项目不要输入操作符"></el-input>
         </el-form-item>
         <el-form-item label="增减项">
-          <el-input v-model="formAdd.other" placeholder="审批人"></el-input>
+          <el-select v-model="formAdd.fluctuat">
+            <el-option label="增" value="增"></el-option>
+            <el-option label="减" value="减"></el-option>
+            <el-option label="不影响" value="不影响"></el-option>
+
+          </el-select>
         </el-form-item>
       </el-form>
 
@@ -205,26 +183,32 @@
         <el-button type="primary" @click="save2">确 定</el-button>
       </div>
     </el-dialog>
-    <!-- 固定项目 -->
-    <el-dialog title="新增导入项目" :visible.sync="newBase" width="700px">
+    <!-- 新增固定项目 -->
+    <el-dialog title="新增固定项目" :visible.sync="newBase" width="700px">
       <el-form
         :label-position="labelPosition"
         :label-width="labelWidth"
         :inline="true"
-        :model="formAdd"
+        :model="baseAdd"
         class="demo-form-inline"
       >
+
+        <el-form-item label="项目类型">
+          <el-input
+            placeholder="固定项目"
+            v-model="baseAdd.itemType"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
         <el-form-item label="项目名称">
-          <el-input v-model="formAdd.name"></el-input>
-        </el-form-item>
-        <el-form-item label="部门名称">
-          <el-input v-model="formAdd.name"></el-input>
-        </el-form-item>
-        <el-form-item label="数值">
-          <el-input v-model="formAdd.address"></el-input>
+          <el-input v-model="baseAdd.itemName"></el-input>
         </el-form-item>
         <el-form-item label="增减项">
-          <el-input v-model="formAdd.other"></el-input>
+          <el-select v-model="baseAdd.fluctuat">
+            <el-option label="增" value="增"></el-option>
+            <el-option label="减" value="减"></el-option>
+            <el-option label="不影响" value="不影响"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -233,42 +217,44 @@
       </div>
     </el-dialog>
     <!-- 新增计算项目 -->
-    <el-dialog title="新增导入项目" :visible.sync="newCaculation" width="700px">
+    <el-dialog title="新增计算项目" :visible.sync="newcalculation" width="700px">
       <el-form
         :label-position="labelPosition"
         :label-width="labelWidth"
         :inline="true"
-        :model="formAdd"
+        :model="calculationAdd"
         class="demo-form-inline"
       >
+        <el-form-item label="项目类型">
+          <el-input
+            placeholder="计算项目"
+            v-model="calculationAdd.itemType"
+            :disabled="true">
+          </el-input>
+        </el-form-item>
         <el-form-item label="项目名称">
-          <el-input v-model="formAdd.name"></el-input>
+          <el-input v-model="calculationAdd.itemName"></el-input>
         </el-form-item>
         <el-form-item label="项目类型">
-          <el-select v-model="formAdd.name">
-            <el-option label="固定项目" value="1"></el-option>
-            <el-option label="导入项目" value="3"></el-option>
-          </el-select>
-        </el-form-item>
-<el-form-item label="操作符">
-          <el-select v-model="caculationItem.operation" placeholder="+">
-            <el-option label="+" value="+"></el-option>
-            <el-option label="-" value="-"></el-option>
-            <el-option label="*" value="*"></el-option>
-            <el-option label="/" value="/"></el-option>
+          <el-select v-model="calculationAdd.first">
+            <el-option v-for="name in ItemName":label="name" :value="name" ></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="数值">
-          <el-input v-model="formAdd.address"></el-input>
+        <el-form-item label="公式">
+          <el-input v-model="calculationAdd.itemFormula"></el-input>
         </el-form-item>
         <el-form-item label="增减项">
-          <el-input v-model="formAdd.other"></el-input>
+          <el-select v-model="calculationAdd.fluctuat">
+            <el-option label="增" value="增"></el-option>
+            <el-option label="减" value="减"></el-option>
+            <el-option label="不影响" value="不影响"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="newBase = false">取 消</el-button>
-        <el-button type="primary" @click="save1">确 定</el-button>
+        <el-button @click="newcalculation = false">取 消</el-button>
+        <el-button type="primary" @click="save">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -290,6 +276,11 @@ export default {
   name: "tablepage",
   data() {
     return {
+
+      calculationAdd:{
+        itemType:'计算项目',
+        itemName:'',
+      },
       //表格的数据
       tableData: '',
       //后端查出的部门
@@ -303,7 +294,12 @@ export default {
       formSearch: {
         //表单对象
         itemName:'',
-        itemType:''
+        itemType:'',
+      },
+      baseAdd: {
+        itemType:'固定项目',
+        itemName:'',
+        fluctuat:''
       },
       labelPosition: "right", //lable对齐方式
       labelWidth: "80px", //lable宽度
@@ -324,68 +320,85 @@ export default {
       dialogAddVisible: false,
       newImport: false,
       newBase: false,
-      newCaculation: false,
+      newcalculation: false,
       formLabelWidth: "120px",
       formAdd: {
         //表单对象
-        name: "",
-        address: "",
-        date: "",
-        other: ""
+        itemName:'',
+        itemType:'导入项目',
+        itemFormula:'',
+        fluctuat:''
       },
-      caculationItem: {
+      calculationItem: {
         //动态获取
-        itemName: ["工作保险", "基本工资"],
-        itemType: "",
-        operation: "",
-        secondOp: "",
-        fluctuat: ""
+        id:'',
+        itemType:'计算项目',
+        itemName: '',
+        fluctuat:'',
+        itemFormula: "",
       },
 
       baseItem: {
         //固定项目，导入项目
+        id:'',
+        itemType:"",
         deptName: "",
         itemName: "",
-        num: 0,
-        fluctuat: "+"
+        fluctuat: ""
       },
-      multipleSelection: []
+      ItemName:'',
+      multipleSelection: [],
+      tmpData:''
     };
   },
   methods: {
-    handleEdit(index, rowData, flag) {
-      this.isImport = flag;
-      console.log(this.isImport);
-      var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
+    newCacula(){
+      apis.getProjectName().then((data)=>{
+        console.log(data.data)
+        this.ItemName = data.data.data
+      })
+      this.newcalculation=true;
+    },
+
+    handleEdit(index, rowData) {
+      let msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
       this.$message({
         message: msg,
         type: "success"
       });
+      this.baseItem = rowData;
+      console.log(this.baseItem)
       this.dialogFormVisible = true;
     },
 
     handleEdit1(index, rowData) {
-      var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
+      let msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
       this.$message({
         message: msg,
         type: "success"
       });
 
-      this.baseItem = rowData;
+      this.calculationItem = rowData;
       this.dialogFormVisible1 = true;
     },
     handleDelete(index, rowData) {
-      var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+      let msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
+      this.$confirm("此操作将永久删除该项目, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          this.tableData.splice(index, 1);
-          this.$message({
-            type: "success",
-            message: "删除成功!" + msg
+          apis.deleteProject(rowData).then((data)=>{
+            console.log(data.data)
+            if (data.data.meta.message!=null){
+              this.$confirm(data.data.meta.message, "提示", {
+                confirmButtonText: "确定",
+                type: "warning"
+              })
+            }else {
+              this.onSubmit();
+            }
           });
         })
         .catch(() => {
@@ -426,7 +439,8 @@ export default {
       console.log(formSearch)
       apis.salaryProject(formSearch).then(data=>{
         let item = data.data.data;
-        this.tableData = item;
+        this.tableData = item
+
       })
     },
     handleSelectionChange(val) {
@@ -443,20 +457,40 @@ export default {
         type: "success"
       });
     },
+    edit(){
+      apis.editSalaryProject(this.baseItem).then((data)=>{
+        this.baseItem='',
+          this.dialogFormVisible=false
+      })
+    },
+    edit2(){
+      apis.editSalaryProject(this.calculationItem).then((data)=>{
+        this.calculationItem='',
+          this.dialogFormVisible2=false
+      })
+    },
+    /**
+     * 新增导入项目
+     */
     save() {
-      let param = Object.assign({}, this.formAdd);
-      this.tableData.push(param);
-      this.newImport = false;
+
+      apis.newSalaryProject(this.calculationAdd).then((data)=>{
+        this.calculationAdd = ''
+        this.newcalculation=false
+      })
     },
     save1() {
-      let param = Object.assign({}, this.formAdd);
-      this.tableData.push(param);
-      this.newBase = false;
+
+      apis.newSalaryProject(this.baseAdd).then((data)=>{
+        this.baseAdd = ''
+        this.newBase=false
+      })
     },
     save2() {
-      let param = Object.assign({}, this.formAdd);
-      this.tableData.push(param);
-      this.newBase = false;
+      apis.newSalaryProject(this.formAdd).then((data)=>{
+        this.formAdd = ''
+        this.newImport=false
+      })
     }
   }
 };
