@@ -65,21 +65,18 @@
     <el-dialog title="员工信息" :visible.sync="dialogFormVisible" width="700px">
       <el-form :label-position="labelPosition" :label-width="labelWidth" :inline="true" :model="formEdit"
                class="demo-form-inline">
-        <el-form-item label="序号">
-          <el-input v-model="formEdit.id" placeholder="序号"></el-input>
-        </el-form-item>
         <el-form-item label="员工编号">
-          <el-input v-model="formEdit.id1" placeholder="员工编号"></el-input>
+          <el-input v-model="formEdit.empNo" placeholder="员工编号"></el-input>
         </el-form-item>
         <el-form-item label="员工姓名">
           <el-input v-model="formEdit.name" placeholder="员工姓名"></el-input>
         </el-form-item>
-          <el-form-item v-for="(item,index) in importItem" :label="item">
-            <el-input v-model="formAdd.map[item]" width="50" sortable></el-input>
+          <el-form-item v-for="item in editItem" :label="item">
+            <el-input v-model="formEdit.map[item]" width="50" sortable></el-input>
           </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="dialogFormVisible = true">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
       </div>
     </el-dialog>
@@ -93,9 +90,10 @@
         <el-form-item label="员工编号">
           <el-input v-model="formAdd.empNo" placeholder="员工编号"></el-input>
         </el-form-item>
-          <el-form-item v-for="item in importItem" :label="item">
-            <el-input v-model="formAdd.map[item]" width="50" ></el-input>
+          <el-form-item v-for="(val, index) in importItem" :label="val" v-model="formAdd.maps[val]">
+            <el-input  width="50" ></el-input>
           </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAddVisible = false">取 消</el-button>
@@ -152,12 +150,12 @@
         dialogAddVisible: false,
         formLabelWidth: '120px',
         formAdd: {
-          empNo:'',
-          map:''
-        },
+          maps:[]
+    },
         forUpdate:{
 
         },
+        editItem:'',
         formEdit: {
         },
         multipleSelection: [],
@@ -167,7 +165,13 @@
     },
     methods: {
       insertImportProject(){
-        apis.importManage.InsertImportProject(this.formAdd);
+        this.dialogAddVisible = true
+        this.formAdd.empName = ''
+        for (let key  in this.importItem){
+          this.formAdd.maps.put(this.importItem,'')
+        }
+        console.log(this.formAdd)
+        //apis.importManage.InsertImportProject(this.formAdd);
         this.dialogAddVisible = false
       },
 
@@ -183,13 +187,9 @@
       },
 
       getImportProject(){
-        console.log("+++++++++++++++");
         this.getImportItem();
         apis.importManage.getImportProject(this.formSearch).then((data)=>{
           this.tableData = data.data.data;
-          this.formEdit = this.tableData;
-          this.formAdd = this.tableData;
-          console.log(this.tableData);
           let i = 1;
           for (let v of this.tableData) {
             v.order = i++;
@@ -197,12 +197,12 @@
         })
       },
       handleEdit(index, rowData) {
-        var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);
-        console.log(this.formEdit)
-        this.$message({
-          message: msg,
-          type: "success"
-        });
+        console.log(rowData)
+        let v = new Array();
+        for (let key in rowData.map){
+          v.push(key)
+        }
+        this.editItem = v;
         this.dialogFormVisible = true;
       },
       handleDelete(index, rowData) {
