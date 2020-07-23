@@ -12,8 +12,8 @@ export default {
     return Axios.post("http://localhost:8080/importProjects",formSearch)
   },
 
-  InsertImportProject:function (formAdd) {
-    console.log(formAdd)
-   //return Axios.put("http://localhost:8080/importProjects",formAdd)
+  updateImportProject:function (formEdit) {
+    console.log(formEdit)
+   return Axios.put("http://localhost:8080/importProjects",formEdit)
   }
 }

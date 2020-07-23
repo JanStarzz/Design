@@ -16,16 +16,9 @@
       </el-form-item>
     </el-form>
     <!-- 查询区----end -->
-    <!-- 操作区----start -->
-    <el-row class="mgb15">
-      <el-button size="small" round type="primary" @click="dialogAddVisible = true">新增</el-button>
-    </el-row>
-    <!-- 操作区----end -->
     <!-- 表格---start -->
     <el-table :data="tableData" border stripe style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55">
-      </el-table-column>
-      <el-table-column prop="order" label="序号" width="50" sortable>
       </el-table-column>
       <el-table-column prop="empNo" label="员工编号" width="50" sortable>
       </el-table-column>
@@ -33,7 +26,7 @@
       </el-table-column>
       <el-table-column prop="deptName" label="部门名" width="100" sortable>
       </el-table-column>
-      <el-table-column label="年月" width="100" sortable>
+      <el-table-column label="年月" width="100" >
         <template scope="scope">
           <div>
             <span>{{scope.row.year+"-"+scope.row.month}}</span>
@@ -51,14 +44,9 @@
       <el-table-column label="操作" fixed="right" min-width="180">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="total,sizes,prev, pager, next,jumper" :current-page="pageInfo.pageIndex"
-                   :page-size="pageInfo.pageSize" :total="pageInfo.pageTotal" :page-sizes="[5, 10, 20, 50]"
-                   @size-change="handleSizeChange" @current-change="handleCurrentChange">
-    </el-pagination>
     <!-- 表格---end -->
 
     <!-- 编辑弹框---start -->
@@ -69,7 +57,10 @@
           <el-input v-model="formEdit.empNo" placeholder="员工编号"></el-input>
         </el-form-item>
         <el-form-item label="员工姓名">
-          <el-input v-model="formEdit.name" placeholder="员工姓名"></el-input>
+          <el-input v-model="formEdit.empName" placeholder="员工姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="年月">
+          <el-input v-model="formEdit.date" placeholder="员工姓名"></el-input>
         </el-form-item>
           <el-form-item v-for="item in editItem" :label="item">
             <el-input v-model="formEdit.map[item]" width="50" sortable></el-input>
@@ -77,7 +68,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = true">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="updateImport()">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -90,7 +81,7 @@
         <el-form-item label="员工编号">
           <el-input v-model="formAdd.empNo" placeholder="员工编号"></el-input>
         </el-form-item>
-          <el-form-item v-for="(val, index) in importItem" :label="val" v-model="formAdd.maps[val]">
+          <el-form-item v-model=" formAdd.maps[val]" v-for="val in importItem" :label="val">
             <el-input  width="50" ></el-input>
           </el-form-item>
 
@@ -165,11 +156,7 @@
     },
     methods: {
       insertImportProject(){
-        this.dialogAddVisible = true
-        this.formAdd.empName = ''
-        for (let key  in this.importItem){
-          this.formAdd.maps.put(this.importItem,'')
-        }
+
         console.log(this.formAdd)
         //apis.importManage.InsertImportProject(this.formAdd);
         this.dialogAddVisible = false
@@ -178,11 +165,16 @@
       getDepartment() {
         apis.baseManage.department().then((data) => {
           this.deptName = data.data.data;
+
         })
       },
       getImportItem(){
         apis.importManage.getImportItem().then((data)=>{
           this.importItem = data.data.data;
+          this.formAdd.empName = ''
+          for (let key  in this.importItem){
+            this.formAdd.maps[this.importItem[key]] = ''
+          }
         })
       },
 
@@ -197,13 +189,22 @@
         })
       },
       handleEdit(index, rowData) {
-        console.log(rowData)
+        this.formEdit = rowData;
+        this.dialogFormVisible = true;
         let v = new Array();
         for (let key in rowData.map){
           v.push(key)
         }
         this.editItem = v;
-        this.dialogFormVisible = true;
+
+      },
+
+      updateImport(){
+        apis.importManage.updateImportProject(this.formEdit).then((data)=>{
+          this.getImportProject();
+
+        })
+        this.dialogFormVisible = false
       },
       handleDelete(index, rowData) {
         var msg = "索引是:" + index + ",行内容是:" + JSON.stringify(rowData);

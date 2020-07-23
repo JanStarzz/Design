@@ -392,12 +392,14 @@ export default {
           apis.deleteProject(rowData).then((data)=>{
             console.log(data.data)
             if (data.data.meta.message!=null){
+              this.onSubmit();
               this.$confirm(data.data.meta.message, "提示", {
                 confirmButtonText: "确定",
                 type: "warning"
+
               })
             }else {
-              this.onSubmit();
+
             }
           });
         })
@@ -477,6 +479,8 @@ export default {
       apis.newSalaryProject(this.calculationAdd).then((data)=>{
         this.calculationAdd = ''
         this.newcalculation=false
+        this.onSubmit(this.formSearch)
+
       })
     },
     save1() {
@@ -484,12 +488,16 @@ export default {
       apis.newSalaryProject(this.baseAdd).then((data)=>{
         this.baseAdd = ''
         this.newBase=false
+        this.onSubmit(this.formSearch)
+
       })
     },
     save2() {
       apis.newSalaryProject(this.formAdd).then((data)=>{
         this.formAdd = ''
         this.newImport=false
+        this.onSubmit(this.formSearch)
+
       })
     }
   }

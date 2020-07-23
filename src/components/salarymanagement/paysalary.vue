@@ -40,10 +40,6 @@
       <el-table-column prop="reallySalary" label="实发工资" width="100" sortable>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="total,sizes,prev, pager, next,jumper" :current-page="pageInfo.pageIndex"
-                   :page-size="pageInfo.pageSize" :total="pageInfo.pageTotal" :page-sizes="[5, 10, 20, 50]"
-                   @size-change="handleSizeChange" @current-change="handleCurrentChange">
-    </el-pagination>
     <!-- 表格---end -->
   </div>
 </template>
@@ -97,6 +93,7 @@
       getPayment(){
         apis.payApi.getPayment(this.formSearch).then((data)=>{
           if (data.data.meta.message="ok"){
+
             this.tableData = data.data.data;
             let map = this.tableData[0].map
             let v = new Array();

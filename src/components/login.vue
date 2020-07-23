@@ -8,8 +8,8 @@
         <el-form-item>
           <el-input v-model="formLogin.username" placeholder="账号"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input v-model="formLogin.password" placeholder="密码"></el-input>
+        <el-form-item  >
+          <el-input v-model="formLogin.password" placeholder="密码" show-password></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登陆</el-button>
@@ -90,7 +90,7 @@
       return {
         formLogin: {   //表单对象
           username: 'admin',
-          password: '123'
+          password: ''
         },
         errorInfo: {
           text: '登陆失败,请重试',

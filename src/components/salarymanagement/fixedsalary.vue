@@ -15,8 +15,6 @@
     <!-- 表格---start -->
     <el-form>
       <el-table :data="tableData" stripe style="width: 1050px">
-        <el-table-column prop="deptNo" label="部门编号" width="120" sortable>
-        </el-table-column>
         <el-table-column prop="deptName" label="部门名称" width="150" sortable>
         </el-table-column>
 
@@ -38,6 +36,22 @@
       </el-table>
     </el-form>
     <!-- 表格---end -->
+    <el-dialog title="新增固定项目" :visible.sync="newBase" width="700px">
+      <el-form
+        :label-position="labelPosition"
+        :label-width="labelWidth"
+        :inline="true"
+        :model="baseAdd"
+        class="demo-form-inline"
+      >
+
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="newBase = false">取 消</el-button>
+        <el-button type="primary" @click="save1">确 定</el-button>
+      </div>
+    </el-dialog>
     <!-- 修改---start -->
     <el-dialog title="修改工资信息" :visible.sync="dialogFormVisible" width="700px">
       <el-form :label-position="labelPosition" :label-width="labelWidth" class="demo-form-inline">
@@ -111,9 +125,12 @@
     methods: {
       updateItem() {
         console.log(this.formEdit)
-        apis.baseManage.updateItem(this.formEdit);
+        apis.baseManage.updateItem(this.formEdit).then((data)=>{
+          this.onSubmit();
+
+        });
         this.dialogFormVisible = false;
-        this.onSubmit();
+
       },
 
       getDepartment() {
