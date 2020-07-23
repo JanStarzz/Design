@@ -6,6 +6,7 @@ import msgApi from './msgApi';
 import salaryProjectApi from "./salaryProjectApi";
 import baseManage from "./baseManage";
 import importManage from "./importManage"
+import payApi from "./payApi"
 /**
  * 接口汇总
  */
@@ -24,5 +25,7 @@ export default {
     // 部門相關接口
     baseManage:baseManage,
 
-    importManage:importManage
+    importManage:importManage,
+
+    payApi:payApi
 }

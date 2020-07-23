@@ -9,11 +9,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="日期">
-        <el-input v-model="formSearch.user" placeholder="日
-        期"></el-input>
+        <el-input v-model="formSearch.date" placeholder="日期"></el-input>
       </el-form-item>
       <el-form-item label=" ">
-        <el-button type="primary" @click="onSubmit">计算</el-button>
+        <el-button type="primary" @click="getPayment">计算</el-button>
       </el-form-item>
     </el-form>
     <!-- 查询区----end -->
@@ -23,25 +22,22 @@
     <el-table :data="tableData" border stripe style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55">
       </el-table-column>
-      <el-table-column prop="id" label="序号" width="50" sortable>
+      <el-table-column prop="empNo" label="员工编号" width="50" sortable>
       </el-table-column>
-      <el-table-column prop="id1" label="员工编号" width="50" sortable>
+      <el-table-column prop="empName" label="员工姓名" width="100" sortable>
       </el-table-column>
-      <el-table-column prop="name" label="员工姓名" width="100" sortable>
+
+      <el-table-column v-for="item in tableItem":label="item" width="100" sortable>
+
+        <template scope="scope">
+          <div>
+            <span>{{scope.row.map[item]}}</span>
+          </div>
+        </template>
       </el-table-column>
-      <el-table-column prop="npay" label="实发工资" width="100" sortable>
+      <el-table-column prop="baseSalary" label="应发工资" width="100" sortable>
       </el-table-column>
-      <el-table-column prop="gpay" label="基本工资" width="100" sortable>
-      </el-table-column>
-      <el-table-column prop="subsidy" label="采暖补贴" width="100" sortable>
-      </el-table-column>
-      <el-table-column prop="day" label="事假天数" width="100" sortable>
-      </el-table-column>
-      <el-table-column prop="deduct" label="事假扣除" width="100" sortable>
-      </el-table-column>
-      <el-table-column prop="tax" label="个人所得税" width="100" sortable>
-      </el-table-column>
-      <el-table-column prop="insurance" label="保险" width="100" sortable>
+      <el-table-column prop="reallySalary" label="实发工资" width="100" sortable>
       </el-table-column>
     </el-table>
     <el-pagination background layout="total,sizes,prev, pager, next,jumper" :current-page="pageInfo.pageIndex"
@@ -78,64 +74,12 @@
           pageSize: 5,
           pageTotal: 80
         },
-        tableData: [
-          {
-            id: "1",
-            id1: "12",
-            name: "张三",
-            region: "会计",
-            npay: "5250",
-            gpay: "6000",
-            subsidy: "200",
-            day: "2",
-            deduct: "200",
-            tax: "250",
-            insurance: "500",
-          },
-          {
-            id: "2",
-            id1: "18",
-            name: "赵四",
-            region: "出纳",
-            npay: "5150",
-            gpay: "6000",
-            subsidy: "200",
-            day: "3",
-            deduct: "300",
-            tax: "250",
-            insurance: "500",
-          },
-          {
-            id: "3",
-            id1: "14",
-            name: "小明",
-            region: "项目经理",
-            npay: "11200",
-            gpay: "12000",
-            subsidy: "200",
-            day: "0",
-            deduct: "0",
-            tax: "500",
-            insurance: "500",
-          },
-          {
-            id: "4",
-            id1: "22",
-            name: "小红",
-            region: "销售员",
-            npay: "7250",
-            gpay: "8000",
-            subsidy: "200",
-            day: "1",
-            deduct: "100",
-            tax: "350",
-            insurance: "500",
-          }
-        ],
+        tableData: '',
         formSearch: {   //表单对象
           user: '',
           region: ''
         },
+        tableItem:'',
         labelPosition: 'right', //lable对齐方式
         labelWidth: '80px',  //lable宽度
         dialogFormVisible: false,
@@ -149,6 +93,22 @@
           console.log("----------")
           this.deptName = data.data.data;
         })
+      },
+      getPayment(){
+        apis.payApi.getPayment(this.formSearch).then((data)=>{
+          if (data.data.meta.message="ok"){
+            this.tableData = data.data.data;
+            let map = this.tableData[0].map
+            let v = new Array();
+            for(let key in map){
+               v.push(key)
+            }
+            this.tableItem = v;
+          }else {
+            alert(data.data.meta.message)
+          }
+
+          })
       },
       handleSizeChange(val) {
         this.pageInfo.pageSize = val;
