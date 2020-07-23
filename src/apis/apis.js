@@ -5,6 +5,7 @@ import mayiApi from './mayiApi';
 import msgApi from './msgApi';
 import salaryProjectApi from "./salaryProjectApi";
 import baseManage from "./baseManage";
+import importManage from "./importManage"
 /**
  * 接口汇总
  */
@@ -21,5 +22,7 @@ export default {
     // 工资项目接口
     salaryProjectApi:salaryProjectApi,
     // 部門相關接口
-    baseManage:baseManage
+    baseManage:baseManage,
+
+    importManage:importManage
 }

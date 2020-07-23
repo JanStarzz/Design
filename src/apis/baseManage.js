@@ -16,12 +16,14 @@ export default {
   },
 
   getBaseRecItem:function (condition) {
-
-    return Axios.post("http://localhost:8080/baseRec",condition)
+    let param ={
+      deptName:condition
+    };
+    return Axios.post("http://localhost:8080/baseRec",param)
   },
 
   updateItem:function (formEdit) {
-    return Axios.post('http://local:8080/baseForJson', formEdit)
+    return Axios.post('http://localhost:8080/updateItem', formEdit)
   }
 
 }
